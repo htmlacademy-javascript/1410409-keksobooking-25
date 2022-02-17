@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Денис Панкрашин](https://up.htmlacademy.ru/javascript/25/user/1410409).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Хабиров](https://htmlacademy.ru/profile/alex_khab).
 
 ---
 
