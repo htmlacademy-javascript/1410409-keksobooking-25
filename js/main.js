@@ -11,7 +11,7 @@ const getRandomInt = (min, max) => {
 
 const getRandomFloat = (min = 1, max = 1, decimal = 5) => {
   if (min >= max || max < 0 || decimal < 0) {
-    return RangeError('введено отрцательное значение диапазона');
+    return RangeError('введен неверный диапазон или отрицательное количество знаков после запятой');
   }
   return +(Math.random() * (max - min) + min).toFixed(decimal);
 };
