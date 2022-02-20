@@ -3,17 +3,17 @@ const getRandomInt = (min, max) => {
   const to = Math.floor(max);
 
   if (from >= to || from < 0) {
-    return RangeError('введен неверный диапазон');
+    throw new RangeError('введен неверный диапазон');
   }
 
   return Math.floor(Math.random() * (to - from + 1) + from);
 };
 
-const getRandomFloat = (min = 1, max = 1, decimal = 5) => {
+const getRandomFloat = (min, max, decimal = 5) => {
   if (min >= max || max < 0 || decimal < 0) {
-    return RangeError('введен неверный диапазон или отрицательное количество знаков после запятой');
+    throw new RangeError('введен неверный диапазон или отрицательное количество знаков после запятой');
   }
-  return +(Math.random() * (max - min) + min).toFixed(decimal);
+  return Number((Math.random() * (max - min) + min).toFixed(decimal));
 };
 
 getRandomInt();
