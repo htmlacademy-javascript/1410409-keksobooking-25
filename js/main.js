@@ -37,35 +37,115 @@ const getAvatarSrcImgArr = (countSrc) => {
       arr.push(`img/avatars/user${  i  }.png`);
     }
   }
-  return shuffleArr(arr);
+  return arr;
+};
+
+const getRandomElFromArray = (elementsArr) => elementsArr[getRandomInt(0, elementsArr.length -1)];
+
+const getRandomArrayFromArray = (arr, minLength = 0) => {
+  const arrTemp = shuffleArr(arr).slice();
+  arrTemp.length = getRandomInt(minLength, arr.length);
+  return arrTemp;
 };
 
 const avatarSrcImgArr = getAvatarSrcImgArr(10);
 
-const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length -1)];
+const titlesOfferArr = [
+  'Гараж',
+  'Здание',
+  'Особняк',
+  'Лодка',
+  'Гостиница',
+  'Отель',
+  'Хостел',
+  'Столовая',
+  'Квартира-студия',
+  'Капсула сна'
+];
 
-const nearAd = {
-  author: {
-    avatar: getRandomArrayElement(avatarSrcImgArr)
-  },
-  offer: {
-    title: 'Шикарный гараж',
-    address: '35.65000, 139.70000',
-    price: 500,
-    type: 'palace',
-    rooms: 3,
-    guests: 3,
-    checkin: '14:00',
-    checkout: '12:00',
-    features: ['wifi', 'dishwasher', 'parking', 'washer'],
-    description: 'Лучший гараж для отдыха',
-    photos: [
-      'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-      'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
-    ],
-  },
-  location: {
-    lat: 35.70000,
-    lng: 139.80000
+const typesArr = [
+  'palace',
+  'flat',
+  'house',
+  'bungalow',
+  'hotel'
+];
+
+const checkTimesArr = [
+  '12:00',
+  '13:00',
+  '14:00'
+];
+
+const featuresArr = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'
+];
+
+const descriptionsOfferArr = [
+  'Шикарный гараж',
+  'Офисное здание',
+  'Уютный особняк',
+  'Лодка для ночлега',
+  'Гостиница без удобств',
+  'Отель несколько звезд',
+  'Хостел без запаха',
+  'Ароматная столовая',
+  'Просторная квартира-студия',
+  'Капсула сна на вокзале'
+];
+
+const photosArr = [
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
+];
+
+const createAuthor = (element) =>
+  ({
+    avatar: element
+  });
+
+const createOffer = () =>
+  ({
+    title: getRandomElFromArray(titlesOfferArr),
+    address: `${getRandomFloat(35.65, 35.7, 5)  }, ${  getRandomFloat(139.7, 139.8, 5)}`,
+    price: getRandomInt(1, 1000),
+    type: getRandomElFromArray(typesArr),
+    rooms: getRandomInt(1, 4),
+    guests: getRandomInt(1, 10),
+    checkin: getRandomElFromArray(checkTimesArr),
+    checkout: getRandomElFromArray(checkTimesArr),
+    features: getRandomArrayFromArray(featuresArr),
+    description: getRandomElFromArray(descriptionsOfferArr),
+    photos: getRandomArrayFromArray(photosArr)
+  });
+
+const createLocation = () =>
+  ({
+    lat: getRandomFloat(35.65, 35.7, 5),
+    lng: getRandomFloat(139.7, 139.8, 5)
+  });
+
+const createNewNearbyAd = (elem) =>
+  ({
+    author: createAuthor(elem),
+    offer: createOffer(),
+    location: createLocation()
+  });
+
+const createNearbyAdsArr = (count = 10) => {
+  const avatarSrcImgArrShuffle = shuffleArr(avatarSrcImgArr);
+  const nearbyAds = [];
+
+  for (let i = 0; i < count; i++) {
+    nearbyAds[i] = createNewNearbyAd(avatarSrcImgArrShuffle[i]);
   }
+  return nearbyAds;
 };
+
+createNearbyAdsArr();
