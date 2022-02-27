@@ -16,8 +16,6 @@ const getRandomFloat = (min, max, decimal = 5) => {
   return Number((Math.random() * (max - min) + min).toFixed(decimal));
 };
 
-//Создание массива с ссылками на автары пользователя
-
 // функция перемешивания элементов массива взята отсюда https://learn.javascript.ru/task/shuffle
 const shuffleArr = (array) => {
   const arrTemp = array.slice();
