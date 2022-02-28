@@ -1,3 +1,70 @@
+// imports
+// const
+// vars
+// funs
+//exe
+
+const TITLES = [
+  'Гараж',
+  'Здание',
+  'Особняк',
+  'Лодка',
+  'Гостиница',
+  'Отель',
+  'Хостел',
+  'Столовая',
+  'Квартира-студия',
+  'Капсула сна'
+];
+
+const TYPES = [
+  'palace',
+  'flat',
+  'house',
+  'bungalow',
+  'hotel'
+];
+
+const CHECK_TIMES = [
+  '12:00',
+  '13:00',
+  '14:00'
+];
+
+const FEATURES = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'
+];
+
+const DISCRIPTIONS = [
+  'Шикарный гараж',
+  'Офисное здание',
+  'Уютный особняк',
+  'Лодка для ночлега',
+  'Гостиница без удобств',
+  'Отель несколько звезд',
+  'Хостел без запаха',
+  'Ароматная столовая',
+  'Просторная квартира-студия',
+  'Капсула сна на вокзале'
+];
+
+const PHOTOS = [
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
+];
+
+
+
+
+
+
+
 const getRandomInt = (min, max) => {
   const from = Math.ceil(min);
   const to = Math.floor(max);
@@ -48,60 +115,7 @@ const getRandomArrayFromArray = (arr, minLength = 0) => {
 
 const avatarSrcImgArr = getAvatarSrcImgArr(10);
 
-const titlesOfferArr = [
-  'Гараж',
-  'Здание',
-  'Особняк',
-  'Лодка',
-  'Гостиница',
-  'Отель',
-  'Хостел',
-  'Столовая',
-  'Квартира-студия',
-  'Капсула сна'
-];
 
-const typesArr = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-  'hotel'
-];
-
-const checkTimesArr = [
-  '12:00',
-  '13:00',
-  '14:00'
-];
-
-const featuresArr = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner'
-];
-
-const descriptionsOfferArr = [
-  'Шикарный гараж',
-  'Офисное здание',
-  'Уютный особняк',
-  'Лодка для ночлега',
-  'Гостиница без удобств',
-  'Отель несколько звезд',
-  'Хостел без запаха',
-  'Ароматная столовая',
-  'Просторная квартира-студия',
-  'Капсула сна на вокзале'
-];
-
-const photosArr = [
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
-];
 
 const createAuthor = (element) =>
   ({
