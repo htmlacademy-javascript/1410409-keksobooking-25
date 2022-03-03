@@ -62,9 +62,6 @@ const PHOTOS = [
 
 
 
-
-
-
 const getRandomInt = (min, max) => {
   const from = Math.ceil(min);
   const to = Math.floor(max);
@@ -80,37 +77,42 @@ const getRandomFloat = (min, max, decimal = 5) => {
   if (min >= max || max < 0 || decimal < 0) {
     throw new RangeError('введен неверный диапазон или отрицательное количество знаков после запятой');
   }
+
   return Number((Math.random() * (max - min) + min).toFixed(decimal));
 };
 
-// функция перемешивания элементов массива взята отсюда https://learn.javascript.ru/task/shuffle
-const shuffleArr = (array) => {
-  const arrTemp = array.slice();
-  for (let i = arrTemp.length - 1; i > 0; i--) {
+
+const shuffle = (array) => {
+  const copy = array.slice();
+
+  for (let i = copy.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arrTemp[i], arrTemp[j]] = [arrTemp[j], arrTemp[i]];
+    [copy[i], copy[j]] = [copy[j], copy[i]];
   }
-  return arrTemp;
+
+  return copy;
 };
 
 const getAvatarSrcImgArr = (countSrc) => {
   const arr = [];
+
   for (let i = 1; i <= countSrc; i++) {
     if (i < 10) {
-      arr.push(`img/avatars/user0${  i  }.png`);
+      arr.push(`img/avatars/user0${i}.png`);
     } else {
-      arr.push(`img/avatars/user${  i  }.png`);
+      arr.push(`img/avatars/user${i}.png`);
     }
   }
+
   return arr;
 };
 
-const getRandomElFromArray = (elementsArr) => elementsArr[getRandomInt(0, elementsArr.length -1)];
+const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
-const getRandomArrayFromArray = (arr, minLength = 0) => {
-  const arrTemp = shuffleArr(arr).slice();
-  arrTemp.length = getRandomInt(minLength, arr.length);
-  return arrTemp;
+const getRandomArray = (arr, minLength = 0) => {
+  const copy = shuffle(arr);
+  copy.length = getRandomInt(minLength, arr.length);
+  return copy;
 };
 
 const avatarSrcImgArr = getAvatarSrcImgArr(10);
@@ -122,36 +124,33 @@ const createAuthor = (element) =>
     avatar: element
   });
 
-const createOffer = () =>
-  ({
-    title: getRandomElFromArray(titlesOfferArr),
-    address: `${getRandomFloat(35.65, 35.7, 5)  }, ${  getRandomFloat(139.7, 139.8, 5)}`,
-    price: getRandomInt(1, 1000),
-    type: getRandomElFromArray(typesArr),
-    rooms: getRandomInt(1, 4),
-    guests: getRandomInt(1, 10),
-    checkin: getRandomElFromArray(checkTimesArr),
-    checkout: getRandomElFromArray(checkTimesArr),
-    features: getRandomArrayFromArray(featuresArr),
-    description: getRandomElFromArray(descriptionsOfferArr),
-    photos: getRandomArrayFromArray(photosArr)
-  });
+const createOffer = () => ({
+  title: getRandomArrayElement(TITLES),
+  address: `${getRandomFloat(35.65, 35.7, 5)}, ${getRandomFloat(139.7, 139.8, 5)}`,
+  price: getRandomInt(1, 1000),
+  type: getRandomArrayElement(TYPES),
+  rooms: getRandomInt(1, 4),
+  guests: getRandomInt(1, 10),
+  checkin: getRandomArrayElement(CHECK_TIMES),
+  checkout: getRandomArrayElement(CHECK_TIMES),
+  features: getRandomArray(FEATURES),
+  description: getRandomArrayElement(DISCRIPTIONS),
+  photos: getRandomArray(PHOTOS)
+});
 
-const createLocation = () =>
-  ({
-    lat: getRandomFloat(35.65, 35.7, 5),
-    lng: getRandomFloat(139.7, 139.8, 5)
-  });
+const createLocation = () => ({
+  lat: getRandomFloat(35.65, 35.7, 5),
+  lng: getRandomFloat(139.7, 139.8, 5)
+});
 
-const createNewNearbyAd = (elem) =>
-  ({
-    author: createAuthor(elem),
-    offer: createOffer(),
-    location: createLocation()
-  });
+const createNewNearbyAd = (elem) => ({
+  author: createAuthor(elem),
+  offer: createOffer(),
+  location: createLocation()
+});
 
 const createNearbyAdsArr = (count = 10) => {
-  const avatarSrcImgArrShuffle = shuffleArr(avatarSrcImgArr);
+  const avatarSrcImgArrShuffle = shuffle(avatarSrcImgArr);
   const nearbyAds = [];
 
   for (let i = 0; i < count; i++) {
@@ -159,5 +158,6 @@ const createNearbyAdsArr = (count = 10) => {
   }
   return nearbyAds;
 };
+
 
 createNearbyAdsArr();
