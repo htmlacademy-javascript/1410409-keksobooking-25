@@ -1,8 +1,11 @@
-// imports
-// const
-// vars
-// funs
-//exe
+
+
+const MAX_AD_COUNT = 20;
+
+const MAX_LAT = 35.7;
+const MIN_LAT = 35.65;
+const MAX_LNG = 139.8;
+const MIN_LNG = 139.7;
 
 const TITLES = [
   'Гараж',
@@ -59,9 +62,6 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const MAX_AD_COUNT = 10;
-
-
 const getRandomInt = (min, max) => {
   const from = Math.ceil(min);
   const to = Math.floor(max);
@@ -80,7 +80,6 @@ const getRandomFloat = (min, max, decimal = 5) => {
 
   return Number((Math.random() * (max - min) + min).toFixed(decimal));
 };
-
 
 const shuffle = (array) => {
   const copy = array.slice();
@@ -111,49 +110,24 @@ const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.le
 
 const getRandomArray = (arr, minLength = 0) => {
   const copy = shuffle(arr);
-  copy.length = getRandomInt(minLength, arr.length);
-  return copy;
+  const rand = getRandomInt(minLength, arr.length);
+  return copy.slice(0, rand);
 };
 
 
-
-
-
-
-const avatarSrcImgArr = getAvatarSrcImgArr(10);
-
-
-
-const createAuthor = (element) => ({
-  avatar: element
-});
-
-const createOffer = () => ({
-  title: getRandomArrayElement(TITLES),
-  address: `${getRandomFloat(35.65, 35.7, 5)}, ${getRandomFloat(139.7, 139.8, 5)}`,
-  price: getRandomInt(1, 1000),
-  type: getRandomArrayElement(TYPES),
-  rooms: getRandomInt(1, 4),
-  guests: getRandomInt(1, 10),
-  checkin: getRandomArrayElement(CHECK_TIMES),
-  checkout: getRandomArrayElement(CHECK_TIMES),
-  features: getRandomArray(FEATURES),
-  description: getRandomArrayElement(DISCRIPTIONS),
-  photos: getRandomArray(PHOTOS)
-});
-
 const createLocation = () => ({
-  lat: getRandomFloat(35.65, 35.7, 5),
-  lng: getRandomFloat(139.7, 139.8, 5)
+  lat: getRandomFloat(MIN_LAT, MAX_LAT, 5),
+  lng: getRandomFloat(MIN_LNG, MAX_LNG, 5)
 });
 
-const createAd = (element) => ({
+
+const createAd = (index, locationAd) => ({
   author: {
-    avatar: element
+    avatar: `img/avatars/user${index.toString().padStart(2, '0')}.png`
   },
   offer: {
     title: getRandomArrayElement(TITLES),
-    address: `${location.lat}, ${this.location.lng}`,
+    address: `${locationAd.lat}, ${locationAd.lng}`,
     price: getRandomInt(1, 1000),
     type: getRandomArrayElement(TYPES),
     rooms: getRandomInt(1, 4),
@@ -165,25 +139,21 @@ const createAd = (element) => ({
     photos: getRandomArray(PHOTOS)
   },
   location: {
-    lat: getRandomFloat(35.65, 35.7, 5),
-    lng: getRandomFloat(139.7, 139.8, 5)
+    lat: locationAd.lat,
+    lng: locationAd.lng
   }
 });
 
 const createAds = (count) => {
-  const avatarSrcImgArrShuffle = shuffle(avatarSrcImgArr);
-  const nearbyAds = [];
+  const ads = [];
 
   for (let i = 0; i < count; i++) {
-    nearbyAds[i] = createAd(avatarSrcImgArrShuffle[i]);
+    const elem = createAd(i+1, createLocation());
+    ads.push(elem);
   }
-  return nearbyAds;
+
+  return ads;
 };
 
-
-const createNearAd = (element) => {
-const locationAd = createLocation();
-
-};
 
 console.log(createAds(MAX_AD_COUNT));
