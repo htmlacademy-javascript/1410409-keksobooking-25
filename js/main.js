@@ -1,6 +1,4 @@
-
-
-const MAX_AD_COUNT = 20;
+const MAX_AD_COUNT = 10;
 
 const MAX_LAT = 35.7;
 const MIN_LAT = 35.65;
@@ -92,20 +90,6 @@ const shuffle = (array) => {
   return copy;
 };
 
-const getAvatarSrcImgArr = (countSrc) => {
-  const arr = [];
-
-  for (let i = 1; i <= countSrc; i++) {
-    if (i < 10) {
-      arr.push(`img/avatars/user0${i}.png`);
-    } else {
-      arr.push(`img/avatars/user${i}.png`);
-    }
-  }
-
-  return arr;
-};
-
 const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
 const getRandomArray = (arr, minLength = 0) => {
@@ -154,6 +138,5 @@ const createAds = (count) => {
 
   return ads;
 };
-
 
 console.log(createAds(MAX_AD_COUNT));
