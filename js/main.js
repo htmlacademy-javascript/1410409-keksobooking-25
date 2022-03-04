@@ -139,4 +139,4 @@ const createAds = (count) => {
   return ads;
 };
 
-console.log(createAds(MAX_AD_COUNT));
+createAds(MAX_AD_COUNT);
