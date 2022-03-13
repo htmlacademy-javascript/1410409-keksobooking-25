@@ -1,6 +1,5 @@
 import {createAds, MAX_AD_COUNT, TYPES_MAP} from './data.js';
 
-
 const mapCanvas = document.querySelector('.map__canvas');
 
 const similarAdTemplate = document.querySelector('#card')
@@ -10,63 +9,95 @@ const similarAdTemplate = document.querySelector('#card')
 const similarAds = createAds(MAX_AD_COUNT);
 const similarAdsFragment = document.createDocumentFragment();
 
-similarAds.forEach(({author, offer, location}) => {
+similarAds.forEach(({author, offer}) => {
   const adElement = similarAdTemplate.cloneNode(true);
-  adElement.querySelector('.popup__title').textContent = offer.title;
-  adElement.querySelector('.popup__text--address').textContent = offer.address;
-  adElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
-  adElement.querySelector('.popup__type').textContent = TYPES_MAP.get(offer.type);
+  const popupTitle = adElement.querySelector('.popup__title');
+  const popupText = adElement.querySelector('.popup__text--address');
+  const popupTextPrice = adElement.querySelector('.popup__text--price');
+  const popupType = adElement.querySelector('.popup__type');
+  const popupTextCapacity = adElement.querySelector('.popup__text--capacity');
+  const popupTextTime = adElement.querySelector('.popup__text--time');
+  const popupFeatures = adElement.querySelector('.popup__features');
+  const featureList = popupFeatures.querySelectorAll('.popup__feature');
+  const popupDescription =  adElement.querySelector('.popup__description');
+  const popupPhotos = adElement.querySelector('.popup__photos');
+  const photoTemplate = popupPhotos.querySelector('.popup__photo');
+  const popupAvatar = adElement.querySelector('.popup__avatar');
 
-  adElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
-  adElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  if (typeof offer.title !== 'undefined') {
+    popupTitle.textContent = offer.title;
+  } else {
+    popupTitle.classList.add('hidden');
+  }
 
-  const featuresContainer = adElement.querySelector('.popup__features');
-  const featureList = featuresContainer.querySelectorAll('.popup__feature');
-  const modifiers = offer.features.map((features) => `popup__feature--${features}`);
+  if (typeof offer.address !== 'undefined') {
+    popupText.textContent = offer.address;
+  } else {
+    popupText.classList.add('hidden');
+  }
 
-  featureList.forEach((featureListItem) => {
-    const modifier = featureListItem.classList[1]; // 1 - это индекс нужного класса в атрибуте class
+  if (typeof offer.price !== 'undefined') {
+    popupTextPrice.textContent = `${offer.price} ₽/ночь`;
+  } else {
+    popupTextPrice.classList.add('hidden');
+  }
 
-    if (!modifiers.includes(modifier)) {
-      featureListItem.remove();
-    }
-  });
+  if (typeof offer.price !== 'undefined') {
+    popupType.textContent = TYPES_MAP.get(offer.type);
+  } else {
+    popupType.classList.add('hidden');
+  }
 
-  adElement.querySelector('.popup__description').textContent = offer.description;
+  if (typeof offer.rooms !== 'undefined' && typeof offer.guests !== 'undefined') {
+    popupTextCapacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
+  } else {
+    popupTextCapacity.classList.add('hidden');
+  }
 
-  const photosList = adElement.querySelector('.popup__photos');
-  const photo = photosList.querySelector('.popup__photo').cloneNode();
-  offer.photos.forEach((photoEl) => {
-    photo.src = photoEl;
-    photosList.append(photo);
-  });
+  if (typeof offer.price !== 'undefined') {
+    popupTextTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  } else {
+    popupTextTime.classList.add('hidden');
+  }
 
-  adElement.querySelector('.popup__avatar').src = author.avatar;
+  if (offer.features.length !== 0) {
+    const modifiers = offer.features.map((features) => `popup__feature--${features}`);
+    featureList.forEach((featureListItem) => {
+      const modifier = featureListItem.classList[1];
 
-  similarAdsFragment.append(adElement);
+      if (!modifiers.includes(modifier)) {
+        featureListItem.remove();
+      }
+    });
+  } else {
+    popupFeatures.innerHTML = '';
+    popupFeatures.classList.add('hidden');
+  }
+
+  if (typeof offer.description !== 'undefined') {
+    popupDescription.textContent = offer.description;
+  } else {
+    popupDescription.classList.add('hidden');
+  }
+
+  popupPhotos.removeChild(photoTemplate);
+  if (offer.photos.length !== 0) {
+    offer.photos.forEach((photoEl) => {
+      const clonePhoto = photoTemplate.cloneNode();
+      clonePhoto.src = photoEl;
+      popupPhotos.appendChild(clonePhoto);
+    });
+  } else {
+    popupPhotos.classList.add('hidden');
+  }
+
+  if (typeof author.avatar !== 'undefined') {
+    popupAvatar.src = author.avatar;
+  } else {
+    popupAvatar.classList.add('hidden');
+  }
+
+  similarAdsFragment.appendChild(adElement);
 });
 
-mapCanvas.append(similarAdsFragment[0]);
-
-// <article className="popup">
-//   <img src="img/avatars/user01.png" className="popup__avatar" width="70" height="70" alt="Аватар пользователя">
-//     <h3 className="popup__title">Уютное гнездышко для молодоженов</h3>
-//     <p className="popup__text popup__text--address">102-0082 Tōkyō-to, Chiyoda-ku, Ichibanchō, 14−3</p>
-//     <p className="popup__text popup__text--price">5200 <span>₽/ночь</span></p>
-//     <h4 className="popup__type">Квартира</h4>
-//     <p className="popup__text popup__text--capacity">2 комнаты для 3 гостей</p>
-//     <p className="popup__text popup__text--time">Заезд после 14:00, выезд до 10:00</p>
-//     <ul className="popup__features">
-//       <li className="popup__feature popup__feature--wifi"></li>
-//       <li className="popup__feature popup__feature--dishwasher"></li>
-//       <li className="popup__feature popup__feature--parking"></li>
-//       <li className="popup__feature popup__feature--washer"></li>
-//       <li className="popup__feature popup__feature--elevator"></li>
-//       <li className="popup__feature popup__feature--conditioner"></li>
-//     </ul>
-//     <p className="popup__description">Великолепная квартира-студия в центре Токио. Подходит как туристам, так и
-//       бизнесменам. Квартира полностью укомплектована и недавно отремонтирована.</p>
-//     <div className="popup__photos">
-//       <img src="" className="popup__photo" width="45" height="40" alt="Фотография жилья">
-//     </div>
-// </article>
+mapCanvas.appendChild(similarAdsFragment.children[0]);
