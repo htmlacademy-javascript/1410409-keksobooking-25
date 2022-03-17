@@ -28,15 +28,6 @@ const TYPES = [
   'hotel'
 ];
 
-const TYPES_MAP = new Map();
-TYPES_MAP
-  .set('flat', 'Квартира')
-  .set('bungalow', 'Бунгало')
-  .set('house', 'Дом')
-  .set('palace', 'Дворец')
-  .set('hotel', 'Отель');
-
-
 const CHECK_TIMES = [
   '12:00',
   '13:00',
@@ -105,4 +96,4 @@ const createAd = (index) => {
 
 const createAds = (count) => Array.from({length: count}, (_, index) => createAd(index + 1));
 
-export {createAds, MAX_AD_COUNT, TYPES_MAP};
+export {createAds, MAX_AD_COUNT};
