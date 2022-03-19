@@ -28,5 +28,4 @@ const activateForm = () => {
   });
 };
 
-
 export {deactivateForm, activateForm};
