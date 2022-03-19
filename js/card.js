@@ -1,4 +1,4 @@
-import {declOfNum} from './util.js';
+import {wordDeclension} from './util.js';
 
 const TYPES_MAP = {
   flat: 'Квартира',
@@ -35,40 +35,18 @@ const createAd = (({author, offer}) => {
   const popupPhotos = adElement.querySelector('.popup__photos');
   const popupAvatar = adElement.querySelector('.popup__avatar');
 
-  fillTextContentData(
-    offer.title,
-    popupTitle,
-    offer.title);
-
-  fillTextContentData(
-    offer.address,
-    popupText,
-    offer.address);
-
-  fillTextContentData(
-    offer.price,
-    popupTextPrice,
-    `${offer.price} ₽/ночь`);
-
-  fillTextContentData(
-    offer.type,
-    popupType,
-    TYPES_MAP[offer.type]);
+  fillTextContentData(offer.title, popupTitle, offer.title);
+  fillTextContentData(offer.address, popupText, offer.address);
+  fillTextContentData(offer.price, popupTextPrice, `${offer.price} ₽/ночь`);
+  fillTextContentData(offer.type, popupType, TYPES_MAP[offer.type]);
 
   fillTextContentData(
     offer.rooms,
     popupTextCapacity,
-    `${offer.rooms} ${declOfNum(offer.rooms, roomsDeclension)} для ${offer.guests} ${declOfNum(offer.guests, guestsDeclension)}`);
+    `${offer.rooms} ${wordDeclension(offer.rooms, roomsDeclension)} для ${offer.guests} ${wordDeclension(offer.guests, guestsDeclension)}`);
 
-  fillTextContentData(
-    offer.checkin,
-    popupTextTime,
-    `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
-
-  fillTextContentData(
-    offer.description,
-    popupDescription,
-    offer.description);
+  fillTextContentData(offer.checkin, popupTextTime, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
+  fillTextContentData(offer.description, popupDescription, offer.description);
 
   if (offer.features.length > 0) {
     popupFeatures.innerHTML = '';
