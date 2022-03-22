@@ -1,6 +1,14 @@
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 
+const pristine = new Pristine(adForm);
+
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+});
+
 const toggleAttributeDisabled = (collection, state) => {
   Array.from(collection).forEach((element) => {
     element.disabled = state;
