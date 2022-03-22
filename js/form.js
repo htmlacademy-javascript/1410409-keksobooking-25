@@ -1,12 +1,21 @@
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
+const title = adForm.querySelector('#title');
 
-const pristine = new Pristine(adForm);
+const pristine = new Pristine(adForm, {
+  classTo: 'ad-form__element',
+  errorClass: 'ad-form__element--invalid',
+  successClass: 'ad-form__element--valid',
+  errorTextParent: 'ad-form__element',
+  errorTextTag: 'span',
+  errorTextClass: 'ad-form__error'
+});
+
+
 
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-
-  const isValid = pristine.validate();
+  pristine.validate();
 });
 
 const toggleAttributeDisabled = (collection, state) => {

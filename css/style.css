@@ -642,6 +642,13 @@ fieldset {
 }
 
 
+.ad-form__error {
+  display: block;
+  font-size: 14px;
+  padding-top: 3px;
+  color: #c00;
+}
+
 /* Футер
    ========================================================================== */
 
