@@ -11,8 +11,6 @@ const pristine = new Pristine(adForm, {
   errorTextClass: 'ad-form__error'
 });
 
-
-
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
