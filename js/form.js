@@ -1,5 +1,3 @@
-import {logger} from "browser-sync/dist/logger";
-
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 const title = adForm.querySelector('#title');
@@ -19,7 +17,6 @@ const roomsOption = {
   '100': ['0']
 };
 
-
 const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
   errorClass: 'ad-form__element--invalid',
@@ -33,13 +30,12 @@ function checkTitleSpaces (value) {
   return value.trim() !== '';
 }
 
-pristine.addValidator(title, checkTitleSpaces, 'Заголовок не может состоять только из пробелов');
-
-function validateCapacity (element) {
 // от количества комнат зависит максимальное количество гостей
- console.log(roomsOption[rooms.value]);
-  return roomsOption[rooms.value].includes(element.value);
+function validateCapacity (element) {
+  return roomsOption[rooms.value].includes(element);
 }
+
+pristine.addValidator(title, checkTitleSpaces, 'Заголовок не может состоять только из пробелов');
 
 pristine.addValidator(capacity, validateCapacity, 'Количество гостей не соответствует выбранному количеству комнат');
 
