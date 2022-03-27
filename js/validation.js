@@ -5,8 +5,8 @@ const rooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const price = adForm.querySelector('#price');
 const type = adForm.querySelector('#type');
-const timein = adForm.querySelector('#timein');
-const timeout = adForm.querySelector('#timeout');
+// const timein = adForm.querySelector('#timein');
+// const timeout = adForm.querySelector('#timeout');
 
 const roomsOption = {
   '1': ['1'],
@@ -32,7 +32,9 @@ const createPristineInstance = () => new Pristine(adForm, {
 });
 
 //Проверка заголовка на пробелы
-const checkTitle = (value) => value && value.trim() !== '' && value >= 30 && value <= 100;
+const checkTitle = (value) => {
+  return value && value.trim() !== '' && value >= 30 && value <= 100;
+};
 const getTitleErrorMessage = () => `Длина заголовка нужна от 30 до 100 символов. Вы ввели ${title.value.length} символов`;
 
 //зависимость поля "Цена за ночь" от типа жилья
@@ -42,7 +44,7 @@ const onSelectPriceChange = () => {
 };
 
 //Проверка минимальной цены
-const validatePrice = (element) => element >= price.min;
+const validatePrice = (element) => Number(element) >= price.min;
 const getPriceErrorMessage = () => `Цена: от ${minPrices[type.value]}р до 100000р`;
 
 //проверка соответствия полей количество комнат и количество мест
@@ -50,12 +52,12 @@ const validateCapacity = (element) => roomsOption[rooms.value].includes(element)
 const validateRooms = (element) => roomsOption[element].includes(capacity.value);
 
 //синхронизация времени заезда и выезда
-const onSelectTimeinChange = () => {
-  timeout.value = timein.value;
-};
-const onSelectTimeoutChange = () => {
-  timein.value = timeout.value;
-};
+// const onSelectTimeinChange = () => {
+//   timeout.value = timein.value;
+// };
+// const onSelectTimeoutChange = () => {
+//   timein.value = timeout.value;
+// };
 
 //Общая проверка формы
 const onFormSubmit = (evt, pristine) => {
@@ -77,8 +79,8 @@ const initValidation = () => {
   const pristine = createPristineInstance();
   addValidators(pristine);
 
-  timein.addEventListener('change', onSelectTimeinChange);
-  timeout.addEventListener('change', onSelectTimeoutChange);
+  // timein.addEventListener('change', onSelectTimeinChange);
+  // timeout.addEventListener('change', onSelectTimeoutChange);
   type.addEventListener('change', onSelectPriceChange);
 
   adForm.addEventListener('submit', (evt) => onFormSubmit(evt, pristine));

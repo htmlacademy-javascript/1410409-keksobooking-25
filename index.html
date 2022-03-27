@@ -95,7 +95,7 @@
               type="text"
               placeholder="Милая, уютная квартирка в центре Токио"
               required
-              data-pristine-required="Это поле нужно обязательно заполнить"
+              data-pristine-required-message="Это поле нужно обязательно заполнить"
             >
           </fieldset>
           <fieldset class="ad-form__element ad-form__element--wide">
@@ -121,7 +121,7 @@
               max="100000"
               placeholder="1000"
               required
-              data-pristine-required="Это поле нужно обязательно заполнить"
+              data-pristine-required-message="Это поле нужно обязательно заполнить"
             >
             <div class="ad-form__slider"></div>
           </fieldset>
@@ -150,9 +150,9 @@
           <fieldset class="ad-form__element">
             <label class="ad-form__label" for="capacity">Количество мест</label>
             <select id="capacity" name="capacity">
-              <option value="3" selected>для 3 гостей</option>
+              <option value="3">для 3 гостей</option>
               <option value="2">для 2 гостей</option>
-              <option value="1">для 1 гостя</option>
+              <option value="1" selected>для 1 гостя</option>
               <option value="0">не для гостей</option>
             </select>
           </fieldset>
