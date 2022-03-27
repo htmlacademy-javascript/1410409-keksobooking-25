@@ -32,9 +32,7 @@ const createPristineInstance = () => new Pristine(adForm, {
 });
 
 //Проверка заголовка на пробелы
-const checkTitle = (value) => {
-  return value && value.trim() !== '' && value >= 30 && value <= 100;
-};
+const checkTitle = (value) => value && value.trim() !== '' && value >= 30 && value <= 100;
 const getTitleErrorMessage = () => `Длина заголовка нужна от 30 до 100 символов. Вы ввели ${title.value.length} символов`;
 
 //зависимость поля "Цена за ночь" от типа жилья
