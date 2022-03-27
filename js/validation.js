@@ -32,7 +32,8 @@ const createPristineInstance = () => new Pristine(adForm, {
 });
 
 //Проверка заголовка на пробелы
-const checkTitleSpaces = (value) => value.trim() !== '';
+const checkTitle = (value) => value && value.trim() !== '' && value >= 30 && value <= 100;
+const getTitleErrorMessage = () => `Длина заголовка нужна от 30 до 100 символов. Вы ввели ${title.value.length} символов`;
 
 //зависимость поля "Цена за ночь" от типа жилья
 const onSelectPriceChange = () => {
@@ -42,7 +43,7 @@ const onSelectPriceChange = () => {
 
 //Проверка минимальной цены
 const validatePrice = (element) => element >= price.min;
-const getErrorMessagePrice = () => `Цена не может быть ниже ${price.min}р`;
+const getPriceErrorMessage = () => `Цена: от ${minPrices[type.value]}р до 100000р`;
 
 //проверка соответствия полей количество комнат и количество мест
 const validateCapacity = (element) => roomsOption[rooms.value].includes(element);
@@ -66,10 +67,10 @@ const onFormChange = (pristine) => {
 };
 
 const addValidators = (pristine) => {
-  pristine.addValidator(title, checkTitleSpaces, 'Заголовок не может состоять только из пробелов');
+  pristine.addValidator(title, checkTitle, getTitleErrorMessage, 2, true);
   pristine.addValidator(rooms, validateRooms, 'Количество комнат не соответствует выбранному количеству гостей');
   pristine.addValidator(capacity, validateCapacity, 'Количество гостей не соответствует выбранному количеству комнат');
-  pristine.addValidator(price, validatePrice, getErrorMessagePrice);
+  pristine.addValidator(price, validatePrice, getPriceErrorMessage, 2, true);
 };
 
 const initValidation = () => {
@@ -81,7 +82,7 @@ const initValidation = () => {
   type.addEventListener('change', onSelectPriceChange);
 
   adForm.addEventListener('submit', (evt) => onFormSubmit(evt, pristine));
-  //adForm.addEventListener('change', () => onFormChange(pristine));
+  adForm.addEventListener('change', () => onFormChange(pristine));
 };
 
 export {initValidation};
