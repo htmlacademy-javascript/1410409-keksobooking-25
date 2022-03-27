@@ -1,6 +1,7 @@
 import {createAds, MAX_AD_COUNT} from './data.js';
 import {createAd} from './card.js';
 import {deactivateForm, activateForm} from './form.js';
+import {initValidation} from './validation.js';
 
 const ads = createAds(MAX_AD_COUNT);
 const ad = createAd(ads[0]);
@@ -10,3 +11,4 @@ mapCanvas.appendChild(ad);
 
 deactivateForm();
 activateForm();
+initValidation();

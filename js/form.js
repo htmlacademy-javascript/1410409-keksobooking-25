@@ -1,30 +1,26 @@
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 
-const toggleAttributeDisabled = (collection) => {
+const toggleAttributeDisabled = (collection, state) => {
   Array.from(collection).forEach((element) => {
-    if (element.disabled) {
-      element.disabled = false;
-    } else {
-      element.disabled = true;
-    }
+    element.disabled = state;
   });
 };
 
 const deactivateForm = () => {
   adForm.classList.add('ad-form--disabled');
-  toggleAttributeDisabled(adForm.children);
+  toggleAttributeDisabled(adForm.children, true);
 
   mapFilters.classList.add('map__filters--disabled');
-  toggleAttributeDisabled(mapFilters.children);
+  toggleAttributeDisabled(mapFilters.children, true);
 };
 
 const activateForm = () => {
   adForm.classList.remove('ad-form--disabled');
-  toggleAttributeDisabled(adForm.children);
+  toggleAttributeDisabled(adForm.children, false);
 
   mapFilters.classList.remove('map__filters--disabled');
-  toggleAttributeDisabled(mapFilters.children);
+  toggleAttributeDisabled(mapFilters.children, false);
 };
 
-export {deactivateForm, activateForm};
+export {deactivateForm, activateForm, adForm};
