@@ -1,5 +1,9 @@
 import {adForm} from './form.js';
 
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+const MAX_PRICE = 100000;
+
 const title = adForm.querySelector('#title');
 const rooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
@@ -33,7 +37,7 @@ const createPristineInstance = () => new Pristine(adForm, {
 
 //Проверка заголовка на пробелы
 const checkTitle = (value) => value && value.trim() !== '' && value >= 30 && value <= 100;
-const getTitleErrorMessage = () => `Длина заголовка нужна от 30 до 100 символов. Вы ввели ${title.value.length} символов`;
+const getTitleErrorMessage = () => `Длина заголовка нужна от ${MIN_TITLE_LENGTH} до ${MAX_TITLE_LENGTH} символов. Вы ввели ${title.value.length} символов`;
 
 //зависимость поля "Цена за ночь" от типа жилья
 const onSelectPriceChange = () => {
@@ -43,7 +47,7 @@ const onSelectPriceChange = () => {
 
 //Проверка минимальной цены
 const validatePrice = (element) => Number(element) >= price.min;
-const getPriceErrorMessage = () => `Цена: от ${minPrices[type.value]}р до 100000р`;
+const getPriceErrorMessage = () => `Цена: от ${minPrices[type.value]}р до ${MAX_PRICE}р`;
 
 //проверка соответствия полей количество комнат и количество мест
 const validateCapacity = (element) => roomsOption[rooms.value].includes(element);
