@@ -1,9 +1,14 @@
+import {createAd} from 'card.js';
+
+const address = document.querySelector('#address');
+
+
 const TOKYO = {
   lat: 35.68173,
   lng: 139.75393,
 };
 
-const address = document.querySelector('#address');
+
 
 const pinIcoMain = L.icon({
   iconUrl: './img/main-pin.svg',
@@ -34,11 +39,9 @@ const markerCommon = L.marker(
     lng: 139.99825,
   },
   {
-    draggable: true,
     icon: pinIconCommon,
   }
 );
-
 
 const createMap = (activateForm, initValidation) => {
   const map = L.map('map-canvas')
@@ -63,15 +66,17 @@ const createMap = (activateForm, initValidation) => {
     },
   ).addTo(map);
 
-  markerMain.addTo(map);
-  markerCommon.addTo(map);
-
   markerMain.on('moveend', (evt) => {
     address.value = `${(evt.target.getLatLng().lat).toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
   });
-
-
-
 };
+
+const addAdsToMap = (map, ads) => {
+  const adsGroup = L.layerGroup().addTo(map);
+  ads.forEach((ad) => {
+    createAd
+  });
+};
+
 
 export {createMap};
