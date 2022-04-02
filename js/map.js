@@ -1,14 +1,11 @@
-import {createAd} from 'card.js';
+import {createAd} from './card.js';
 
 const address = document.querySelector('#address');
-
 
 const TOKYO = {
   lat: 35.68173,
   lng: 139.75393,
 };
-
-
 
 const pinIcoMain = L.icon({
   iconUrl: './img/main-pin.svg',
@@ -33,23 +30,13 @@ const markerMain = L.marker(
   }
 );
 
-const markerCommon = L.marker(
-  {
-    lat: 35.56441,
-    lng: 139.99825,
-  },
-  {
-    icon: pinIconCommon,
-  }
-);
-
 const createMap = (activateForm, initValidation) => {
   const map = L.map('map-canvas')
     .on('load', () => {
       if (activateForm) {
         activateForm();
       }
-      if(initValidation) {
+      if (initValidation) {
         initValidation();
       }
       address.value = `${TOKYO.lat}, ${TOKYO.lng}`;
@@ -66,17 +53,33 @@ const createMap = (activateForm, initValidation) => {
     },
   ).addTo(map);
 
+  markerMain.addTo(map);
+
   markerMain.on('moveend', (evt) => {
     address.value = `${(evt.target.getLatLng().lat).toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
   });
+
+  return map;
 };
 
-const addAdsToMap = (map, ads) => {
+const createMarkerCommon = (ad, map) => {
   const adsGroup = L.layerGroup().addTo(map);
-  ads.forEach((ad) => {
-    createAd
-  });
+
+  const {location} = ad;
+
+  const markerCommon = L.marker(
+    {
+      lat: location.lat,
+      lng: location.lng,
+    },
+    {
+      icon: pinIconCommon,
+    }
+  );
+
+  markerCommon
+    .addTo(adsGroup)
+    .bindPopup(createAd(ad));
 };
 
-
-export {createMap};
+export {createMap, createMarkerCommon};
