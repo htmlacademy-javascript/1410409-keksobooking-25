@@ -1,3 +1,5 @@
+import {setSlider} from './slider-price.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 100000;
@@ -79,6 +81,7 @@ const addValidators = (pristine) => {
 const initValidation = () => {
   const pristine = createPristineInstance();
   addValidators(pristine);
+  setSlider(()=> pristine.validate(price));
 
   timein.addEventListener('change', onSelectTimeinChange);
   timeout.addEventListener('change', onSelectTimeoutChange);

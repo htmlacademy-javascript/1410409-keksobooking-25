@@ -35,6 +35,10 @@ const markerMain = L.marker(
   }
 );
 
+const map = L.map('map-canvas');
+const adsGroup = L.layerGroup().addTo(map);
+
+
 const setAddress = (value) => {
   address.value = value;
 };
@@ -44,17 +48,18 @@ const onMarkerMove = (evt) => {
   setAddress(`${lat.toFixed(5)}, ${lng.toFixed(5)}`);
 };
 
-const createMap = (activateForm, initValidation) => {
-  const map = L.map('map-canvas')
-    .on('load', () => {
-      if (activateForm) {
-        activateForm();
-      }
-      if (initValidation) {
-        initValidation();
-      }
-      setAddress(`${TOKYO.lat}, ${TOKYO.lng}`);
-    })
+
+const initMap = (activateForm, initValidation) => {
+
+  map.on('load', () => {
+    if (activateForm) {
+      activateForm();
+    }
+    if (initValidation) {
+      initValidation();
+    }
+    setAddress(`${TOKYO.lat}, ${TOKYO.lng}`);
+  })
     .setView({
       lat: TOKYO.lat,
       lng: TOKYO.lng,
@@ -74,24 +79,25 @@ const createMap = (activateForm, initValidation) => {
   return map;
 };
 
-const renderMarkers = (ad, map) => {
-  const adsGroup = L.layerGroup().addTo(map);
+const renderMarkers = (ads) => {
 
-  const {location} = ad;
+  ads.forEach((ad) => {
+    const {location} = ad;
 
-  const markerCommon = L.marker(
-    {
-      lat: location.lat,
-      lng: location.lng,
-    },
-    {
-      icon: pinIconCommon,
-    }
-  );
+    const markerCommon = L.marker(
+      {
+        lat: location.lat,
+        lng: location.lng,
+      },
+      {
+        icon: pinIconCommon,
+      }
+    );
 
-  markerCommon
-    .addTo(adsGroup)
-    .bindPopup(createAd(ad));
+    markerCommon
+      .addTo(adsGroup)
+      .bindPopup(createAd(ad));
+  });
 };
 
-export {createMap, renderMarkers};
+export {initMap, renderMarkers};
