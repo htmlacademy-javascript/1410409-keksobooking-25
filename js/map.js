@@ -2,6 +2,11 @@ import {createAd} from './card.js';
 
 const address = document.querySelector('#address');
 
+const ZOOM_START = 10;
+const LAYER_TILE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+
 const TOKYO = {
   lat: 35.68173,
   lng: 139.75393,
@@ -30,6 +35,15 @@ const markerMain = L.marker(
   }
 );
 
+const setAddress = (value) => {
+  address.value = value;
+};
+
+const onMarkerMove = (evt) => {
+  const {lat, lng} = evt.target.getLatLng();
+  setAddress(`${lat.toFixed(5)}, ${lng.toFixed(5)}`);
+};
+
 const createMap = (activateForm, initValidation) => {
   const map = L.map('map-canvas')
     .on('load', () => {
@@ -39,30 +53,28 @@ const createMap = (activateForm, initValidation) => {
       if (initValidation) {
         initValidation();
       }
-      address.value = `${TOKYO.lat}, ${TOKYO.lng}`;
+      setAddress(`${TOKYO.lat}, ${TOKYO.lng}`);
     })
     .setView({
       lat: TOKYO.lat,
       lng: TOKYO.lng,
-    }, 10);
+    }, ZOOM_START);
 
   L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    LAYER_TILE,
     {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: LAYER_ATTRIBUTION,
     },
   ).addTo(map);
 
   markerMain.addTo(map);
 
-  markerMain.on('moveend', (evt) => {
-    address.value = `${(evt.target.getLatLng().lat).toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
-  });
+  markerMain.on('move', onMarkerMove);
 
   return map;
 };
 
-const createMarkerCommon = (ad, map) => {
+const renderMarkers = (ad, map) => {
   const adsGroup = L.layerGroup().addTo(map);
 
   const {location} = ad;
@@ -82,4 +94,4 @@ const createMarkerCommon = (ad, map) => {
     .bindPopup(createAd(ad));
 };
 
-export {createMap, createMarkerCommon};
+export {createMap, renderMarkers};

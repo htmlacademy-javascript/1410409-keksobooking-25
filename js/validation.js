@@ -1,9 +1,8 @@
-import {adForm} from './form.js';
-
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 100000;
 
+const adForm = document.querySelector('.ad-form');
 const title = adForm.querySelector('#title');
 const rooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
