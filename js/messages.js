@@ -67,6 +67,6 @@ const showFailMessage = () => {
   document.addEventListener('keydown', (evt) => onMessageEscKeydown(evt, errorMessage));
 
   document.body.append(errorMessage);
-}
+};
 
 export {showAlert, showSuccessMessage, showFailMessage};
