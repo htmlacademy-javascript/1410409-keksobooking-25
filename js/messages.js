@@ -1,11 +1,14 @@
 import {isEscapeKey} from './util.js';
 
-
 const ALERT_SHOW_TIME = 5000;
 
-const sucessTemplate = document.querySelector('#success')
+const successTemplate = document.querySelector('#success')
   .content
   .querySelector('.success');
+
+const errorTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -31,26 +34,39 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const onMessageEscKeydown = (evt) => {
+
+const removeMessage = (message) => {
+  message.remove();
+  document.removeEventListener('keydown', onMessageEscKeydown);
+};
+
+function onMessageEscKeydown(evt, message) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    this.remove();
-    document.removeEventListener('keydown', onMessageEscKeydown);
+    removeMessage(message);
   }
+}
+
+const showSuccessMessage = () => {
+
+  const successMessage = successTemplate.cloneNode(true);
+
+  successMessage.addEventListener('click', () => removeMessage(successMessage));
+
+  document.addEventListener('keydown', (evt) => onMessageEscKeydown(evt, successMessage));
+
+  document.body.append(successMessage);
 };
 
-const showMessageSuccess = () => {
+const showFailMessage = () => {
+  const errorMessage = errorTemplate.cloneNode(true);
+  const errorButton = errorMessage.querySelector('.error__button');
 
-  const message = sucessTemplate.cloneNode(true);
+  errorMessage.addEventListener('click', () => removeMessage(errorMessage));
+  errorButton.addEventListener('click', () => removeMessage(errorMessage));
+  document.addEventListener('keydown', (evt) => onMessageEscKeydown(evt, errorMessage));
 
-  message.addEventListener('click', () => {
-    message.remove();
-  });
+  document.body.append(errorMessage);
+}
 
-  document.addEventListener('keydown', onMessageEscKeydown);
-
-  document.body.append(message);
-};
-
-
-export {showAlert, showMessageSuccess};
+export {showAlert, showSuccessMessage, showFailMessage};

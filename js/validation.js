@@ -1,7 +1,7 @@
 import {setSlider} from './slider-price.js';
 import {sendData} from './load.js';
 import {resetForm} from './form.js';
-import {showMessageSuccess} from './messages.js';
+import {showFailMessage, showSuccessMessage} from './messages.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -83,13 +83,12 @@ const onFormSubmit = (evt, pristine) => {
     blockSubmitButton();
     sendData(
       () => {
-        console.log('успех');
-        showMessageSuccess();
+        showSuccessMessage();
         resetForm();
         unblockSubmitButton();
       },
       () => {
-        console.log('неудача');
+        showFailMessage();
         unblockSubmitButton();
       },
       new FormData(evt.target),

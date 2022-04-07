@@ -1,13 +1,9 @@
 import {renderMarkers} from './map.js';
 import {showAlert} from './messages.js';
 
-
-const adForm = document.querySelector('.ad-form');
 const GET_DATA_SERVER_URL = 'https://25.javascript.pages.academy/keksobooking/data';
-const SEND_DATA_SERVER_URL = 'https://25.javascript.pages.academy/keksobooking';
+const SEND_DATA_SERVER_URL = 'https://25.javascript.pages.academ/keksobooking';
 const GET_DATA_ALERT_MESSAGE = 'Ошибка загрузки данных с сервера';
-
-
 
 const getData = () => fetch(GET_DATA_SERVER_URL)
   .then((response) => response.json())

@@ -1,4 +1,4 @@
-import {resetMap, setAddress} from './map.js';
+import {resetMap} from './map.js';
 
 
 const adForm = document.querySelector('.ad-form');
