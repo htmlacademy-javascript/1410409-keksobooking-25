@@ -48,7 +48,7 @@ const createAd = (({author, offer}) => {
   fillTextContentData(offer.checkin, popupTextTime, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
   fillTextContentData(offer.description, popupDescription, offer.description);
 
-  if (offer.features.length > 0) {
+  if (offer.features) {
     popupFeatures.innerHTML = '';
     offer.features.forEach((feature) => {
       const element = `<li class="popup__feature popup__feature--${feature}"></li>`;
@@ -58,7 +58,7 @@ const createAd = (({author, offer}) => {
     popupFeatures.remove();
   }
 
-  if (offer.photos.length > 0) {
+  if (offer.photos) {
     popupPhotos.innerHTML = '';
     offer.photos.forEach((photo) => {
       const image = `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`;

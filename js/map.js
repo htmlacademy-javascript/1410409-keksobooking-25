@@ -2,7 +2,7 @@ import {createAd} from './card.js';
 
 const address = document.querySelector('#address');
 
-const ZOOM_START = 10;
+const ZOOM_START = 15;
 const LAYER_TILE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
@@ -100,4 +100,18 @@ const renderMarkers = (ads) => {
   });
 };
 
-export {initMap, renderMarkers};
+const resetMap = () => {
+  markerMain.setLatLng({
+    lat: TOKYO.lat,
+    lng: TOKYO.lng,
+  });
+  map.setView({
+    lat: TOKYO.lat,
+    lng: TOKYO.lng,
+  }, ZOOM_START);
+  map.closePopup();
+  const {lat, lng} = markerMain.getLatLng();
+  setAddress(`${lat}, ${lng}`);
+};
+
+export {initMap, renderMarkers, resetMap, setAddress};

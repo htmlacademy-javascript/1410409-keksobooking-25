@@ -1,10 +1,14 @@
 import {setSlider} from './slider-price.js';
+import {sendData} from './load.js';
+import {resetForm} from './form.js';
+import {showMessageSuccess} from './messages.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 100000;
 
 const adForm = document.querySelector('.ad-form');
+const submitButton = adForm.querySelector('.ad-form__submit');
 const title = adForm.querySelector('#title');
 const rooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
@@ -62,11 +66,37 @@ const onSelectTimeoutChange = () => {
   timein.value = timeout.value;
 };
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Отправляю...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
 //Общая проверка формы
 const onFormSubmit = (evt, pristine) => {
   evt.preventDefault();
-  pristine.validate();
+  if (pristine.validate()) {
+    blockSubmitButton();
+    sendData(
+      () => {
+        console.log('успех');
+        showMessageSuccess();
+        resetForm();
+        unblockSubmitButton();
+      },
+      () => {
+        console.log('неудача');
+        unblockSubmitButton();
+      },
+      new FormData(evt.target),
+    );
+  }
 };
+
 const onFormChange = (pristine) => {
   pristine.validate();
 };

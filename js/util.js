@@ -43,4 +43,6 @@ const wordDeclension = (number, words) => (
     : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]]
 );
 
-export {getRandomInt, getRandomFloat, getRandomArrayElement, getRandomArray, wordDeclension};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInt, getRandomFloat, getRandomArrayElement, getRandomArray, wordDeclension, isEscapeKey};

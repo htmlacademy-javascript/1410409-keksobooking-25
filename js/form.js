@@ -1,5 +1,9 @@
+import {resetMap, setAddress} from './map.js';
+
+
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
+const resetButton = adForm.querySelector('.ad-form__reset');
 
 const toggleAttributeDisabled = (collection, state) => {
   Array.from(collection).forEach((element) => {
@@ -23,4 +27,15 @@ const activateForm = () => {
   toggleAttributeDisabled(mapFilters.children, false);
 };
 
-export {deactivateForm, activateForm, adForm};
+const resetForm = () => {
+  adForm.reset();
+  mapFilters.reset();
+  resetMap();
+};
+
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+});
+
+export {deactivateForm, activateForm, resetForm};
