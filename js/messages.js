@@ -34,7 +34,8 @@ const showAlert = (message) => {
 const onMessageEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    message.remove();
+    this.remove();
+    document.removeEventListener('keydown', onMessageEscKeydown);
   }
 };
 
@@ -46,11 +47,7 @@ const showMessageSuccess = () => {
     message.remove();
   });
 
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      message.remove();
-    }
-  });
+  document.addEventListener('keydown', onMessageEscKeydown);
 
   document.body.append(message);
 };
