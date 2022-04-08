@@ -49,7 +49,7 @@ const onMarkerMove = (evt) => {
 };
 
 
-const initMap = (activateForm, initValidation) => {
+const initMap = (activateForm, initValidation, loadData) => {
 
   map.on('load', () => {
     if (activateForm) {
@@ -59,6 +59,8 @@ const initMap = (activateForm, initValidation) => {
       initValidation();
     }
     setAddress(`${TOKYO.lat}, ${TOKYO.lng}`);
+
+    loadData();
   })
     .setView({
       lat: TOKYO.lat,

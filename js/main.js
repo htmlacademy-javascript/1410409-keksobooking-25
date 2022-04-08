@@ -1,10 +1,19 @@
-import {deactivateForm, activateForm} from './form.js';
+import {deactivateForm, activateForm, activateFilters} from './form.js';
 import {initValidation} from './validation.js';
-import {initMap} from './map.js';
-import {getData} from './load.js';
+import {initMap, renderMarkers} from './map.js';
+import {getData} from './api.js';
+import {showAlert} from './messages.js';
+
+const MAX_COUNT_ADS = 10;
+const GET_DATA_ALERT_MESSAGE = 'Ошибка загрузки данных с сервера';
 
 deactivateForm();
 
-initMap(activateForm, initValidation);
+const onLoadSuccess = (markers) => {
+  activateFilters();
+  renderMarkers(markers.slice(0, MAX_COUNT_ADS));
+};
 
-getData();
+const onLoadFail = () => showAlert(GET_DATA_ALERT_MESSAGE);
+
+initMap(activateForm, initValidation, () => getData(onLoadSuccess, onLoadFail));

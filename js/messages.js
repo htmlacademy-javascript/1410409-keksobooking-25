@@ -12,10 +12,10 @@ const errorTemplate = document.querySelector('#error')
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 1000;
+  alertContainer.style.zIndex = '1000';
   alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
-  alertContainer.style.right = 0;
+  alertContainer.style.left = '0';
+  alertContainer.style.right = '0';
   alertContainer.style.margin = 'auto';
   alertContainer.style.width = '500px';
   alertContainer.style.top = '110px';
@@ -35,38 +35,28 @@ const showAlert = (message) => {
 };
 
 
-const removeMessage = (message) => {
-  message.remove();
-  document.removeEventListener('keydown', onMessageEscKeydown);
-};
+const showMessage = (node) => {
+  const message = node.cloneNode(true);
 
-function onMessageEscKeydown(evt, message) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    removeMessage(message);
+  const removeMessage = () => {
+    message.remove();
+    document.removeEventListener('keydown', onMessageEscKeydown);
+  };
+
+  function onMessageEscKeydown(evt) {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      removeMessage(message);
+    }
   }
-}
 
-const showSuccessMessage = () => {
-
-  const successMessage = successTemplate.cloneNode(true);
-
-  successMessage.addEventListener('click', () => removeMessage(successMessage));
-
-  document.addEventListener('keydown', (evt) => onMessageEscKeydown(evt, successMessage));
-
-  document.body.append(successMessage);
+  message.addEventListener('click', () => removeMessage(message));
+  document.addEventListener('keydown', onMessageEscKeydown);
+  document.body.append(message);
 };
 
-const showFailMessage = () => {
-  const errorMessage = errorTemplate.cloneNode(true);
-  const errorButton = errorMessage.querySelector('.error__button');
 
-  errorMessage.addEventListener('click', () => removeMessage(errorMessage));
-  errorButton.addEventListener('click', () => removeMessage(errorMessage));
-  document.addEventListener('keydown', (evt) => onMessageEscKeydown(evt, errorMessage));
-
-  document.body.append(errorMessage);
-};
+const showSuccessMessage = () => showMessage(successTemplate);
+const showFailMessage = () => showMessage(errorTemplate);
 
 export {showAlert, showSuccessMessage, showFailMessage};

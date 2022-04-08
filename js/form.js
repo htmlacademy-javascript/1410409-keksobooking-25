@@ -22,7 +22,9 @@ const deactivateForm = () => {
 const activateForm = () => {
   adForm.classList.remove('ad-form--disabled');
   toggleAttributeDisabled(adForm.children, false);
+};
 
+const activateFilters = () => {
   mapFilters.classList.remove('map__filters--disabled');
   toggleAttributeDisabled(mapFilters.children, false);
 };
@@ -38,4 +40,4 @@ resetButton.addEventListener('click', (evt) => {
   resetForm();
 });
 
-export {deactivateForm, activateForm, resetForm};
+export {deactivateForm, activateForm, activateFilters, resetForm};

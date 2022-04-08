@@ -1,5 +1,5 @@
 import {setSlider} from './slider-price.js';
-import {sendData} from './load.js';
+import {sendData} from './api.js';
 import {resetForm} from './form.js';
 import {showFailMessage, showSuccessMessage} from './messages.js';
 
