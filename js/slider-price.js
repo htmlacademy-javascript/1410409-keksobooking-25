@@ -1,14 +1,14 @@
 const slider = document.querySelector('.ad-form__slider');
 const inputPrice = document.querySelector('#price');
-const priceMax = inputPrice.max;
-const priceMin = inputPrice.min;
+const PRICE_MAX = 100000;
+const PRICE_MIN = 0;
 
 noUiSlider.create(slider, {
   range: {
-    min: Number(priceMin),
-    max: Number(priceMax),
+    min: Number(PRICE_MIN),
+    max: Number(PRICE_MAX),
   },
-  start: priceMin,
+  start: 1000,
   format: {
     to: (value) => value.toFixed(0),
     from: (value) => parseFloat(value),
