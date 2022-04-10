@@ -2,6 +2,11 @@ import {toggleAttributeDisabled} from './form.js';
 import {clearMap, renderMarkers} from './map.js';
 import {debounce} from './util.js';
 
+const PRICE_MIDDLE = 10000;
+const PRICE_HIGHT = 50000;
+const DEFAULT_VALUE = 'any';
+
+
 const mapFilters = document.querySelector('.map__filters');
 const housingType = mapFilters.querySelector('#housing-type');
 const housingPrice = mapFilters.querySelector('#housing-price');
@@ -10,28 +15,29 @@ const housingGuests = mapFilters.querySelector('#housing-guests');
 const housingFeatures = mapFilters.querySelector('#housing-features');
 
 
-const filterByType = (ad) => housingType.value === 'any' || housingType.value === ad.offer.type;
+const filterByType = ({ offer }) => housingType.value === DEFAULT_VALUE || housingType.value === offer.type;
 
-const filterByPrice = (ad) => {
-  if (housingPrice.value === 'any') {
+const filterByPrice = ({ offer }) => {
+  if (housingPrice.value === DEFAULT_VALUE) {
     return true;
   }
+
   if (housingPrice.value === 'middle') {
-    return ad.offer.price >= 10000 && ad.offer.price < 50000;
+    return offer.price >= PRICE_MIDDLE && offer.price < PRICE_HIGHT;
   }
+
   if (housingPrice.value === 'low') {
-    return ad.offer.price < 10000;
+    return offer.price < PRICE_MIDDLE;
   }
-  if (housingPrice.value === 'high') {
-    return ad.offer.price >= 50000;
-  }
+
+  return offer.price >= PRICE_HIGHT;
 };
 
-const filterByRooms = (ad) => housingRooms.value === 'any' || Number(housingRooms.value) === ad.offer.rooms;
+const filterByRooms = ({ offer }) => housingRooms.value === DEFAULT_VALUE || Number(housingRooms.value) === offer.rooms;
 
-const filterByGuests = (ad) => housingGuests.value === 'any' || Number(housingGuests.value) === ad.offer.guests;
+const filterByGuests = ({ offer }) => housingGuests.value === DEFAULT_VALUE || Number(housingGuests.value) === offer.guests;
 
-const getFeaturesRank = (ad) => {
+const getFeaturesRank = ({ offer }) => {
   const checkedFeatures = housingFeatures.querySelectorAll('[type="checkbox"]:checked');
 
   if(!checkedFeatures.length) {
@@ -40,12 +46,12 @@ const getFeaturesRank = (ad) => {
 
   let rank = 0;
 
-  if (!ad.offer.features) {
+  if (!offer.features) {
     return rank;
   }
 
   for (let i = 0; i < checkedFeatures.length; i++) {
-    if (ad.offer.features.includes(checkedFeatures[i].value)) {
+    if (offer.features.includes(checkedFeatures[i].value)) {
       rank++;
     } else {
       rank = 0;
@@ -61,29 +67,27 @@ const filterByFeatures = (ad) => getFeaturesRank(ad);
 const compareAdsByFeatures = (ad1, ad2) => getFeaturesRank(ad2) - getFeaturesRank(ad1);
 
 const getFilteredMarkers = (markers) => markers
-  .filter(filterByType)
-  .filter(filterByPrice)
-  .filter(filterByRooms)
-  .filter(filterByGuests)
-  .filter(filterByFeatures)
+  .filter((item) => filterByType(item) && filterByPrice(item) && filterByRooms(item) && filterByGuests(item) && filterByFeatures(item))
   .sort(compareAdsByFeatures);
 
-const renderFilteredMarkers = (markers, MAX_COUNT_ADS) => {
+const renderFilteredMarkers = (markers, maxMarkersAmount) => {
   clearMap();
-  renderMarkers(getFilteredMarkers(markers).slice(0, MAX_COUNT_ADS));
+  renderMarkers(getFilteredMarkers(markers).slice(0, maxMarkersAmount));
 };
 
-const setFiltersChange = (cb) => {
+const setFilterListener = (cb) => {
   mapFilters.addEventListener('change', () => {
     cb();
   });
 };
 
-const activateFilters = (markers, MAX_COUNT_ADS, RERENDER_DELAY) => {
+
+
+const activateFilters = (markers, maxMarkersAmount) => {
   mapFilters.classList.remove('map__filters--disabled');
   toggleAttributeDisabled(mapFilters.children, false);
 
-  setFiltersChange(debounce(() => renderFilteredMarkers(markers, MAX_COUNT_ADS), RERENDER_DELAY));
+  setFilterListener(debounce(() => renderFilteredMarkers(markers, maxMarkersAmount)));
 };
 
 export {activateFilters};

@@ -2,7 +2,7 @@ import {createAd} from './card.js';
 
 const address = document.querySelector('#address');
 
-const ZOOM_START = 15;
+const ZOOM_START = 12;
 const LAYER_TILE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
