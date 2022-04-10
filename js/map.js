@@ -82,7 +82,6 @@ const initMap = (activateForm, initValidation, loadData) => {
 };
 
 const renderMarkers = (ads) => {
-
   ads.forEach((ad) => {
     const {location} = ad;
 
@@ -100,6 +99,8 @@ const renderMarkers = (ads) => {
       .addTo(adsGroup)
       .bindPopup(createAd(ad));
   });
+
+  return adsGroup;
 };
 
 const resetMap = () => {
