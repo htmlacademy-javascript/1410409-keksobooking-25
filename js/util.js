@@ -45,4 +45,13 @@ const wordDeclension = (number, words) => (
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInt, getRandomFloat, getRandomArrayElement, getRandomArray, wordDeclension, isEscapeKey};
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {getRandomInt, getRandomFloat, getRandomArrayElement, getRandomArray, wordDeclension, isEscapeKey, debounce};
