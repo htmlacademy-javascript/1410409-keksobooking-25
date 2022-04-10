@@ -1,4 +1,5 @@
 import {resetMap} from './map.js';
+import {renderFilteredMarkers} from './map-filters.js';
 
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -23,10 +24,17 @@ const activateForm = () => {
   toggleAttributeDisabled(adForm.children, false);
 };
 
-const resetForm = () => {
+const setFormResetListener = (cb) => {
+  adForm.addEventListener('reset', () => {
+    cb();
+  });
+};
+
+const resetForm = (markers, maxMarkersAmount) => {
   adForm.reset();
   mapFilters.reset();
   resetMap();
+  setFormResetListener(() => renderFilteredMarkers(markers, maxMarkersAmount));
 };
 
 resetButton.addEventListener('click', (evt) => {
