@@ -1,5 +1,5 @@
 import {toggleAttributeDisabled} from './form.js';
-import {renderMarkers} from './map.js';
+import {clearMap, renderMarkers} from './map.js';
 import {debounce} from './util.js';
 
 const mapFilters = document.querySelector('.map__filters');
@@ -68,8 +68,8 @@ const getFilteredMarkers = (markers) => markers
   .filter(filterByFeatures)
   .sort(compareAdsByFeatures);
 
-const renderFilteredMarkers = (markers, adsLayer, MAX_COUNT_ADS) => {
-  adsLayer.clearLayers();
+const renderFilteredMarkers = (markers, MAX_COUNT_ADS) => {
+  clearMap();
   renderMarkers(getFilteredMarkers(markers).slice(0, MAX_COUNT_ADS));
 };
 
@@ -79,11 +79,11 @@ const setFiltersChange = (cb) => {
   });
 };
 
-const activateFilters = (markers, adsLayer, MAX_COUNT_ADS, RERENDER_DELAY) => {
+const activateFilters = (markers, MAX_COUNT_ADS, RERENDER_DELAY) => {
   mapFilters.classList.remove('map__filters--disabled');
   toggleAttributeDisabled(mapFilters.children, false);
 
-  setFiltersChange(debounce(() => renderFilteredMarkers(markers, adsLayer, MAX_COUNT_ADS), RERENDER_DELAY));
+  setFiltersChange(debounce(() => renderFilteredMarkers(markers, MAX_COUNT_ADS), RERENDER_DELAY));
 };
 
 export {activateFilters};

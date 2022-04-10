@@ -99,8 +99,6 @@ const renderMarkers = (ads) => {
       .addTo(adsGroup)
       .bindPopup(createAd(ad));
   });
-
-  return adsGroup;
 };
 
 const resetMap = () => {
@@ -117,4 +115,8 @@ const resetMap = () => {
   setAddress(`${lat}, ${lng}`);
 };
 
-export {initMap, renderMarkers, resetMap, setAddress};
+const clearMap = () => {
+  adsGroup.clearLayers();
+};
+
+export {initMap, renderMarkers, resetMap, setAddress, clearMap};

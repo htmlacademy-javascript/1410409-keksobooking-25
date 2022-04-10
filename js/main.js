@@ -12,9 +12,9 @@ const GET_DATA_ALERT_MESSAGE = 'Ошибка загрузки данных с с
 deactivateForm();
 
 const onLoadSuccess = (markers) => {
-  const adsLayer = renderMarkers(markers.slice(0, MAX_COUNT_ADS));
+  renderMarkers(markers.slice(0, MAX_COUNT_ADS));
 
-  activateFilters(markers, adsLayer, MAX_COUNT_ADS, RERENDER_DELAY);
+  activateFilters(markers, MAX_COUNT_ADS, RERENDER_DELAY);
 };
 
 const onLoadFail = () => showAlert(GET_DATA_ALERT_MESSAGE);
