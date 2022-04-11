@@ -1,4 +1,4 @@
-import {deactivateForm, activateForm} from './form.js';
+import {deactivateForm, activateForm, setFormResetListener} from './form.js';
 import {initValidation} from './validation.js';
 import {initMap, renderMarkers} from './map.js';
 import {getData} from './api.js';
@@ -14,6 +14,8 @@ const onLoadSuccess = (markers) => {
   renderMarkers(markers.slice(0, MAX_COUNT_ADS));
 
   activateFilters(markers, MAX_COUNT_ADS);
+
+  setFormResetListener(() => renderMarkers(markers.slice(0, MAX_COUNT_ADS)));
 };
 
 const onLoadFail = () => showAlert(GET_DATA_ALERT_MESSAGE);

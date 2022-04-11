@@ -6,7 +6,7 @@ const PRICE_MIDDLE = 10000;
 const PRICE_HIGHT = 50000;
 const DEFAULT_VALUE = 'any';
 
-const adForm = document.querySelector('.ad-form');
+
 const mapFilters = document.querySelector('.map__filters');
 const housingType = mapFilters.querySelector('#housing-type');
 const housingPrice = mapFilters.querySelector('#housing-price');

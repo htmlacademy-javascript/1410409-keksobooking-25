@@ -30,11 +30,10 @@ const setFormResetListener = (cb) => {
   });
 };
 
-const resetForm = (markers, maxMarkersAmount) => {
+const resetForm = () => {
   adForm.reset();
   mapFilters.reset();
   resetMap();
-  setFormResetListener(() => renderFilteredMarkers(markers, maxMarkersAmount));
 };
 
 resetButton.addEventListener('click', (evt) => {
@@ -42,4 +41,4 @@ resetButton.addEventListener('click', (evt) => {
   resetForm();
 });
 
-export {deactivateForm, activateForm, resetForm, toggleAttributeDisabled};
+export {deactivateForm, activateForm, resetForm, toggleAttributeDisabled, setFormResetListener};
