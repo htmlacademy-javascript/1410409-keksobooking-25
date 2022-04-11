@@ -75,8 +75,11 @@ const renderFilteredMarkers = (markers, maxMarkersAmount) => {
   renderMarkers(getFilteredMarkers(markers).slice(0, maxMarkersAmount));
 };
 
-const setFilterListener = (cb) => {
+const setFilterListeners = (cb) => {
   mapFilters.addEventListener('change', () => {
+    cb();
+  });
+  mapFilters.addEventListener('reset', () => {
     cb();
   });
 };
@@ -85,7 +88,7 @@ const activateFilters = (markers, maxMarkersAmount) => {
   mapFilters.classList.remove('map__filters--disabled');
   toggleAttributeDisabled(mapFilters.children, false);
 
-  setFilterListener(debounce(() => renderFilteredMarkers(markers, maxMarkersAmount)));
+  setFilterListeners(debounce(() => renderFilteredMarkers(markers, maxMarkersAmount)));
 };
 
 export {activateFilters, renderFilteredMarkers};
