@@ -1,6 +1,5 @@
 import {resetMap} from './map.js';
 
-
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 const resetButton = adForm.querySelector('.ad-form__reset');
@@ -24,9 +23,10 @@ const activateForm = () => {
   toggleAttributeDisabled(adForm.children, false);
 };
 
-const activateFilters = () => {
-  mapFilters.classList.remove('map__filters--disabled');
-  toggleAttributeDisabled(mapFilters.children, false);
+const setFormResetListener = (cb) => {
+  adForm.addEventListener('reset', () => {
+    cb();
+  });
 };
 
 const resetForm = () => {
@@ -40,4 +40,4 @@ resetButton.addEventListener('click', (evt) => {
   resetForm();
 });
 
-export {deactivateForm, activateForm, activateFilters, resetForm};
+export {deactivateForm, activateForm, resetForm, toggleAttributeDisabled, setFormResetListener};

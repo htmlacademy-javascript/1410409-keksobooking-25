@@ -2,7 +2,7 @@ import {createAd} from './card.js';
 
 const address = document.querySelector('#address');
 
-const ZOOM_START = 15;
+const ZOOM_START = 12;
 const LAYER_TILE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
@@ -82,7 +82,6 @@ const initMap = (activateForm, initValidation, loadData) => {
 };
 
 const renderMarkers = (ads) => {
-
   ads.forEach((ad) => {
     const {location} = ad;
 
@@ -116,4 +115,8 @@ const resetMap = () => {
   setAddress(`${lat}, ${lng}`);
 };
 
-export {initMap, renderMarkers, resetMap, setAddress};
+const clearMap = () => {
+  adsGroup.clearLayers();
+};
+
+export {initMap, renderMarkers, resetMap, setAddress, clearMap};
