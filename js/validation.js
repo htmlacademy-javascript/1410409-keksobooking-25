@@ -14,8 +14,8 @@ const rooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const price = adForm.querySelector('#price');
 const type = adForm.querySelector('#type');
-const timein = adForm.querySelector('#timein');
-const timeout = adForm.querySelector('#timeout');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
 
 const roomsOption = {
   '1': ['1'],
@@ -59,11 +59,11 @@ const validateCapacity = (element) => roomsOption[rooms.value].includes(element)
 const validateRooms = (element) => roomsOption[element].includes(capacity.value);
 
 //синхронизация времени заезда и выезда
-const onSelectTimeinChange = () => {
-  timeout.value = timein.value;
+const onSelectTimeInChange = () => {
+  timeOut.value = timeIn.value;
 };
-const onSelectTimeoutChange = () => {
-  timein.value = timeout.value;
+const onSelectTimeOutChange = () => {
+  timeIn.value = timeOut.value;
 };
 
 const blockSubmitButton = () => {
@@ -112,8 +112,8 @@ const initValidation = () => {
   addValidators(pristine);
   setSlider(()=> pristine.validate(price));
 
-  timein.addEventListener('change', onSelectTimeinChange);
-  timeout.addEventListener('change', onSelectTimeoutChange);
+  timeIn.addEventListener('change', onSelectTimeInChange);
+  timeOut.addEventListener('change', onSelectTimeOutChange);
   type.addEventListener('change', onSelectPriceChange);
 
   adForm.addEventListener('submit', (evt) => onFormSubmit(evt, pristine));
