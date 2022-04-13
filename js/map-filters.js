@@ -1,19 +1,18 @@
-import {toggleAttributeDisabled} from './form.js';
+import {toggleAttributeDisabled, mapFilters} from './form.js';
 import {clearMap, renderMarkers} from './map.js';
 import {debounce} from './util.js';
 
-const PRICE_MIDDLE = 10000;
-const PRICE_HIGHT = 50000;
+const PRICE_LOW_NUMBER = 10000;
+const PRICE_HIGHT_NUMBER = 50000;
+const PRICE_LOW_WORD = 'low';
+const PRICE_MIDDLE_WORD = 'middle';
 const DEFAULT_VALUE = 'any';
 
-
-const mapFilters = document.querySelector('.map__filters');
 const housingType = mapFilters.querySelector('#housing-type');
 const housingPrice = mapFilters.querySelector('#housing-price');
 const housingRooms = mapFilters.querySelector('#housing-rooms');
 const housingGuests = mapFilters.querySelector('#housing-guests');
 const housingFeatures = mapFilters.querySelector('#housing-features');
-
 
 const filterByType = ({ offer }) => housingType.value === DEFAULT_VALUE || housingType.value === offer.type;
 
@@ -22,15 +21,15 @@ const filterByPrice = ({ offer }) => {
     return true;
   }
 
-  if (housingPrice.value === 'middle') {
-    return offer.price >= PRICE_MIDDLE && offer.price < PRICE_HIGHT;
+  if (housingPrice.value === PRICE_MIDDLE_WORD) {
+    return offer.price >= PRICE_LOW_NUMBER && offer.price < PRICE_HIGHT_NUMBER;
   }
 
-  if (housingPrice.value === 'low') {
-    return offer.price < PRICE_MIDDLE;
+  if (housingPrice.value === PRICE_LOW_WORD) {
+    return offer.price < PRICE_LOW_NUMBER;
   }
 
-  return offer.price >= PRICE_HIGHT;
+  return offer.price >= PRICE_HIGHT_NUMBER;
 };
 
 const filterByRooms = ({ offer }) => housingRooms.value === DEFAULT_VALUE || Number(housingRooms.value) === offer.rooms;

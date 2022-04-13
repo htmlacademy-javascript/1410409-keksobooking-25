@@ -1,7 +1,9 @@
-const slider = document.querySelector('.ad-form__slider');
-const inputPrice = document.querySelector('#price');
 const PRICE_MAX = 100000;
 const PRICE_MIN = 0;
+const PRICE_DEFAULT = 1000;
+
+const slider = document.querySelector('.ad-form__slider');
+const inputPrice = document.querySelector('#price');
 
 noUiSlider.create(slider, {
   range: {
@@ -22,4 +24,9 @@ const setSlider = (cb) => {
   });
 };
 
-export {setSlider};
+const resetSlider = () => {
+  slider.noUiSlider.set(PRICE_DEFAULT);
+  inputPrice.value = slider.noUiSlider.get();
+};
+
+export {setSlider, resetSlider};

@@ -1,14 +1,14 @@
 import {setSlider} from './slider-price.js';
 import {sendData} from './api.js';
-import {resetForm} from './form.js';
+import {resetForm, adForm} from './form.js';
 import {showFailMessage, showSuccessMessage} from './messages.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 100000;
 
-const adForm = document.querySelector('.ad-form');
 const submitButton = adForm.querySelector('.ad-form__submit');
+const resetButton = adForm.querySelector('.ad-form__reset');
 const title = adForm.querySelector('#title');
 const rooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
@@ -41,7 +41,7 @@ const createPristineInstance = () => new Pristine(adForm, {
 });
 
 //Проверка заголовка на пробелы
-const checkTitle = (value) => value && value.trim() !== '' && value.length >= 30 && value.length <= 100;
+const checkTitle = (value) => value && value.trim() !== '' && value.length >= MIN_TITLE_LENGTH && value.length <= MAX_TITLE_LENGTH;
 const getTitleErrorMessage = () => `Длина заголовка нужна от ${MIN_TITLE_LENGTH} до ${MAX_TITLE_LENGTH} символов. Вы ввели ${title.value.length} символов`;
 
 //зависимость поля "Цена за ночь" от типа жилья
@@ -76,27 +76,38 @@ const unblockSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
+const blockResetButton = () => {
+  resetButton.disabled = true;
+};
+
+const unblockResetButton = () => {
+  resetButton.disabled = false;
+};
+
 //Общая проверка формы
-const onFormSubmit = (evt, pristine) => {
+const onAdFormSubmit = (evt, pristine) => {
   evt.preventDefault();
   if (pristine.validate()) {
     blockSubmitButton();
+    blockResetButton();
     sendData(
       () => {
         showSuccessMessage();
         resetForm();
         unblockSubmitButton();
+        unblockResetButton();
       },
       () => {
         showFailMessage();
         unblockSubmitButton();
+        unblockResetButton();
       },
       new FormData(evt.target),
     );
   }
 };
 
-const onFormChange = (pristine) => {
+const onAdFormChange = (pristine) => {
   pristine.validate();
 };
 
@@ -116,8 +127,8 @@ const initValidation = () => {
   timeOut.addEventListener('change', onSelectTimeOutChange);
   type.addEventListener('change', onSelectPriceChange);
 
-  adForm.addEventListener('submit', (evt) => onFormSubmit(evt, pristine));
-  adForm.addEventListener('change', () => onFormChange(pristine));
+  adForm.addEventListener('submit', (evt) => onAdFormSubmit(evt, pristine));
+  adForm.addEventListener('change', () => onAdFormChange(pristine));
 };
 
 export {initValidation};

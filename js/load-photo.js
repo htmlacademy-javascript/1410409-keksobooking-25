@@ -1,6 +1,7 @@
+import {adForm} from './form.js';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-const adForm = document.querySelector('.ad-form');
 const photoChooser = adForm.querySelector('#images');
 const photoElement = adForm.querySelector('.ad-form__photo');
 const photoContainer = adForm.querySelector('.ad-form__photo-container');

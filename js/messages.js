@@ -40,10 +40,10 @@ const showMessage = (node) => {
 
   const removeMessage = () => {
     message.remove();
-    document.removeEventListener('keydown', onMessageEscKeydown);
+    document.removeEventListener('keydown', onDocumentEscKeydown);
   };
 
-  function onMessageEscKeydown(evt) {
+  function onDocumentEscKeydown(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       removeMessage(message);
@@ -51,7 +51,7 @@ const showMessage = (node) => {
   }
 
   message.addEventListener('click', () => removeMessage(message));
-  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('keydown', onDocumentEscKeydown);
   document.body.append(message);
 };
 

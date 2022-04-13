@@ -1,7 +1,8 @@
+import {adForm} from './form.js';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const DEFAULT_AVATAR = 'img/muffin-grey.svg';
 
-const adForm = document.querySelector('.ad-form');
 const avatarChooser = adForm.querySelector('#avatar');
 const avatarPreview = adForm.querySelector('.avatar-preview');
 
