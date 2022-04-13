@@ -1,7 +1,10 @@
-const slider = document.querySelector('.ad-form__slider');
-const inputPrice = document.querySelector('#price');
+import {price} from './elements.js';
+
 const PRICE_MAX = 100000;
 const PRICE_MIN = 0;
+const PRICE_DEFAULT = 1000;
+
+const slider = document.querySelector('.ad-form__slider');
 
 noUiSlider.create(slider, {
   range: {
@@ -17,9 +20,15 @@ noUiSlider.create(slider, {
 
 const setSlider = (cb) => {
   slider.noUiSlider.on('update', () => {
-    inputPrice.value = slider.noUiSlider.get();
+    price.value = slider.noUiSlider.get();
     cb();
   });
 };
 
-export {setSlider};
+const resetSlider = () => {
+  slider.noUiSlider.set(PRICE_DEFAULT);
+  price.value = PRICE_DEFAULT;
+  price.min = PRICE_DEFAULT;
+};
+
+export {setSlider, resetSlider};

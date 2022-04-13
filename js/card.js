@@ -1,4 +1,4 @@
-import {wordDeclension} from './util.js';
+import {getWordDeclension} from './util.js';
 
 const TYPES_MAP = {
   flat: 'Квартира',
@@ -8,8 +8,8 @@ const TYPES_MAP = {
   hotel: 'Отель'
 };
 
-const roomsDeclension = ['комната', 'комнаты', 'комнат'];
-const guestsDeclension = ['гостя', 'гостей', 'гостей'];
+const ROOMS_DECLENSION = ['комната', 'комнаты', 'комнат'];
+const GUESTS_DECLENSION = ['гостя', 'гостей', 'гостей'];
 const adTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
@@ -43,7 +43,7 @@ const createAd = (({author, offer}) => {
   fillTextContentData(
     offer.rooms,
     popupTextCapacity,
-    `${offer.rooms} ${wordDeclension(offer.rooms, roomsDeclension)} для ${offer.guests} ${wordDeclension(offer.guests, guestsDeclension)}`);
+    `${offer.rooms} ${getWordDeclension(offer.rooms, ROOMS_DECLENSION)} для ${offer.guests} ${getWordDeclension(offer.guests, GUESTS_DECLENSION)}`);
 
   fillTextContentData(offer.checkin, popupTextTime, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`);
   fillTextContentData(offer.description, popupDescription, offer.description);

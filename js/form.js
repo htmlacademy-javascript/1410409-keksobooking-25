@@ -1,8 +1,6 @@
 import {resetMap} from './map.js';
-
-const adForm = document.querySelector('.ad-form');
-const mapFilters = document.querySelector('.map__filters');
-const resetButton = adForm.querySelector('.ad-form__reset');
+import {resetSlider} from './slider-price.js';
+import {adForm, mapFilters, resetButton} from './elements.js';
 
 const toggleAttributeDisabled = (collection, state) => {
   Array.from(collection).forEach((element) => {
@@ -23,14 +21,9 @@ const activateForm = () => {
   toggleAttributeDisabled(adForm.children, false);
 };
 
-const setFormResetListener = (cb) => {
-  adForm.addEventListener('reset', () => {
-    cb();
-  });
-};
-
 const resetForm = () => {
   adForm.reset();
+  resetSlider();
   mapFilters.reset();
   resetMap();
 };
@@ -40,4 +33,4 @@ resetButton.addEventListener('click', (evt) => {
   resetForm();
 });
 
-export {deactivateForm, activateForm, resetForm, toggleAttributeDisabled, setFormResetListener};
+export {deactivateForm, activateForm, resetForm, toggleAttributeDisabled};

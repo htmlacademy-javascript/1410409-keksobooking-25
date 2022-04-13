@@ -1,6 +1,7 @@
+import {adForm} from './elements.js';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-const adForm = document.querySelector('.ad-form');
 const photoChooser = adForm.querySelector('#images');
 const photoElement = adForm.querySelector('.ad-form__photo');
 const photoContainer = adForm.querySelector('.ad-form__photo-container');
@@ -26,6 +27,12 @@ photoChooser.addEventListener('change', () => {
     }
   });
 });
+
+const onPhotoChooserChange = (evt) => {
+  evt.stopPropagation();
+};
+
+photoChooser.addEventListener('change', onPhotoChooserChange);
 
 adForm.addEventListener('reset', () => {
   const photos = photoContainer.querySelectorAll('.ad-form__photo');

@@ -1,7 +1,8 @@
+import {adForm} from './elements.js';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const DEFAULT_AVATAR = 'img/muffin-grey.svg';
 
-const adForm = document.querySelector('.ad-form');
 const avatarChooser = adForm.querySelector('#avatar');
 const avatarPreview = adForm.querySelector('.avatar-preview');
 
@@ -15,6 +16,12 @@ avatarChooser.addEventListener('change', () => {
     avatarPreview.src = URL.createObjectURL(file);
   }
 });
+
+const onAvatarChooserChange = (evt) => {
+  evt.stopPropagation();
+};
+
+avatarChooser.addEventListener('change', onAvatarChooserChange);
 
 adForm.addEventListener('reset', () => {
   avatarPreview.src = DEFAULT_AVATAR;
