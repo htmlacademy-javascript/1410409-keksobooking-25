@@ -1,6 +1,7 @@
-import {toggleAttributeDisabled, mapFilters} from './form.js';
+import {toggleAttributeDisabled} from './form.js';
 import {clearMap, renderMarkers} from './map.js';
 import {debounce} from './util.js';
+import {mapFilters} from './elements.js';
 
 const PRICE_LOW_NUMBER = 10000;
 const PRICE_HIGHT_NUMBER = 50000;

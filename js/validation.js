@@ -1,36 +1,34 @@
 import {setSlider} from './slider-price.js';
 import {sendData} from './api.js';
-import {resetForm, adForm} from './form.js';
+import {resetForm} from './form.js';
 import {showFailMessage, showSuccessMessage} from './messages.js';
+import {adForm, type, price, resetButton} from './elements.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 100000;
 
-const submitButton = adForm.querySelector('.ad-form__submit');
-const resetButton = adForm.querySelector('.ad-form__reset');
-const title = adForm.querySelector('#title');
-const rooms = adForm.querySelector('#room_number');
-const capacity = adForm.querySelector('#capacity');
-const price = adForm.querySelector('#price');
-const type = adForm.querySelector('#type');
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
-
-const roomsOption = {
+const ROOMS_OPTION = {
   '1': ['1'],
   '2': ['1', '2'],
   '3': ['1', '2', '3'],
   '100': ['0']
 };
 
-const minPrices = {
+const MIN_PRICES = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
   house: 5000,
   palace: 10000
 };
+
+const submitButton = adForm.querySelector('.ad-form__submit');
+const title = adForm.querySelector('#title');
+const rooms = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
 
 const createPristineInstance = () => new Pristine(adForm, {
   classTo: 'ad-form__element',
@@ -46,17 +44,17 @@ const getTitleErrorMessage = () => `Длина заголовка нужна о�
 
 //зависимость поля "Цена за ночь" от типа жилья
 const onSelectPriceChange = () => {
-  price.min = minPrices[type.value];
-  price.placeholder = minPrices[type.value];
+  price.min = MIN_PRICES[type.value];
+  price.placeholder = MIN_PRICES[type.value];
 };
 
 //Проверка минимальной цены
 const validatePrice = (element) => Number(element) >= price.min;
-const getPriceErrorMessage = () => `Цена: от ${minPrices[type.value]}р до ${MAX_PRICE}р`;
+const getPriceErrorMessage = () => `Цена: от ${MIN_PRICES[type.value]}р до ${MAX_PRICE}р`;
 
 //проверка соответствия полей количество комнат и количество мест
-const validateCapacity = (element) => roomsOption[rooms.value].includes(element);
-const validateRooms = (element) => roomsOption[element].includes(capacity.value);
+const validateCapacity = (element) => ROOMS_OPTION[rooms.value].includes(element);
+const validateRooms = (element) => ROOMS_OPTION[element].includes(capacity.value);
 
 //синхронизация времени заезда и выезда
 const onSelectTimeInChange = () => {
@@ -111,6 +109,10 @@ const onAdFormChange = (pristine) => {
   pristine.validate();
 };
 
+const onResetButtonClick = (pristine) => {
+  pristine.reset();
+};
+
 const addValidators = (pristine) => {
   pristine.addValidator(title, checkTitle, getTitleErrorMessage, 2, true);
   pristine.addValidator(rooms, validateRooms, 'Количество комнат не соответствует выбранному количеству гостей');
@@ -120,6 +122,7 @@ const addValidators = (pristine) => {
 
 const initValidation = () => {
   const pristine = createPristineInstance();
+  price.min = MIN_PRICES[type.value];
   addValidators(pristine);
   setSlider(()=> pristine.validate(price));
 
@@ -129,6 +132,7 @@ const initValidation = () => {
 
   adForm.addEventListener('submit', (evt) => onAdFormSubmit(evt, pristine));
   adForm.addEventListener('change', () => onAdFormChange(pristine));
+  resetButton.addEventListener('click', () => onResetButtonClick(pristine));
 };
 
-export {initValidation};
+export {initValidation, MIN_PRICES};

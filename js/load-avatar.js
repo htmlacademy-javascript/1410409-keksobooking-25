@@ -1,4 +1,4 @@
-import {adForm} from './form.js';
+import {adForm} from './elements.js';
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const DEFAULT_AVATAR = 'img/muffin-grey.svg';
@@ -16,6 +16,12 @@ avatarChooser.addEventListener('change', () => {
     avatarPreview.src = URL.createObjectURL(file);
   }
 });
+
+const onAvatarChooserChange = (evt) => {
+  evt.stopPropagation();
+};
+
+avatarChooser.addEventListener('change', onAvatarChooserChange);
 
 adForm.addEventListener('reset', () => {
   avatarPreview.src = DEFAULT_AVATAR;

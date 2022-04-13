@@ -1,4 +1,4 @@
-import {adForm} from './form.js';
+import {adForm} from './elements.js';
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
@@ -27,6 +27,12 @@ photoChooser.addEventListener('change', () => {
     }
   });
 });
+
+const onPhotoChooserChange = (evt) => {
+  evt.stopPropagation();
+};
+
+photoChooser.addEventListener('change', onPhotoChooserChange);
 
 adForm.addEventListener('reset', () => {
   const photos = photoContainer.querySelectorAll('.ad-form__photo');
