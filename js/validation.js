@@ -92,6 +92,7 @@ const onAdFormSubmit = (evt, pristine) => {
       () => {
         showSuccessMessage();
         resetForm();
+        pristine.reset();
         unblockSubmitButton();
         unblockResetButton();
       },
